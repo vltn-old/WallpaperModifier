@@ -2,7 +2,7 @@
 
 This programm will allow you to select multiple wallpaper image and the programm will automaticly change your wallpaper every time.
 
-<i> Note: this programm is actually in developement so you probably will encountered few bugs <i>
+<i> Note: this programm is actually in developement so you probably will encountered few bugs </i>
 
 ## Requirements ##
 
@@ -36,6 +36,6 @@ When you open it for the first time it will ask you to choose your wallpaper dir
 
 You can use this script manually, you just have to run the main.py file every time you want to change your wallpaper. The script will select an other image of your wallpaper folder and set it a desktop wallpaper.
 
-<b> Automatic </b>
+<b> Automatic: </b>
 
 You can run the script automaticly every time you want by using the task scheduler. You simply have to select timestamp and the main.py file.
