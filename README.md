@@ -16,9 +16,9 @@ At this point of time you don't have installer for windows, so you need to insta
 
 Go download this repo in your computer:
 
-"""
+'''
 git clone https://github.com/vltn17/WallpaperModifier.git
-"""
+'''
 
 <b> Then: </b>
 
