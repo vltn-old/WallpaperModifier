@@ -10,11 +10,11 @@ To be able to use this programm you need to be on windows and to have python ins
 
 ## Installation ##
 
-At this point of time you don't have installer for windows, so you need to install manually.
+At this point of time you don't have installer for windows, so you need to install it manually.
 
 <b> First: </b>
 
-Go download this repo in your computer:
+Download the repo in your computer:
 
 ```
 git clone https://github.com/vltn17/WallpaperModifier.git
@@ -22,11 +22,11 @@ git clone https://github.com/vltn17/WallpaperModifier.git
 
 <b> Then: </b>
 
-You need to excute the setup.py script to install all python librairie that are required.
+You need to excute the setup.cmd script to install all python librairie that are required.
 
 <b> Finally </b>
 
-Run the main.py file to start the programm.
+Run the python file to start the programm.
 
 When you open it for the first time it will ask you to choose your wallpaper directory.
 
@@ -34,7 +34,7 @@ When you open it for the first time it will ask you to choose your wallpaper dir
 
 <b> Manual: </b>
 
-You can use this script manually, you just have to run the main.py file every time you want to change your wallpaper. The script will select an other image of your wallpaper folder and set it a desktop wallpaper.
+You can use this script manually, you just have to run the python file file every time you want to change your wallpaper. The script will select an other image of your wallpaper folder and set it a desktop wallpaper.
 
 <b> Automatic: </b>
 
