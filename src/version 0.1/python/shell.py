@@ -48,8 +48,8 @@ def setPath(command):
     return True;
 
 def checkIfDataFileAlreadyExist():
-    if os.path.isfile("data.txt") == False:
-        file = open("data.txt", "a+");
+    if os.path.isfile("../data.txt") == False:
+        file = open("../data.txt", "a+");
         file.close();
 
         print("\u001b[32mThe data file does not exist or have been deleted. Creating new one ! Your settings are be reset to default make sure you restore your settings.\u001b[0m \n");
@@ -57,7 +57,7 @@ def checkIfDataFileAlreadyExist():
         return True;
 
 def checkPathAlreadySet():
-    file = open("data.txt", "r");
+    file = open("../data.txt", "r");
 
     content = file.read();
     data = content.split(';');
@@ -84,7 +84,7 @@ def checkPathAlreadySet():
     return True;
 
 def writeInFile(data):
-    file = open('data.txt', 'w');
+    file = open('../data.txt', 'w');
 
     for i in data:
         file.write(i);
@@ -92,7 +92,7 @@ def writeInFile(data):
     file.close();
 
 def changeWallpaper():
-    file = open("data.txt", "r");
+    file = open("../data.txt", "r");
 
     content = file.read();
     data = content.split(';');

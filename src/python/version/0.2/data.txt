@@ -1,3 +1,0 @@
-wallpaperPath, ;
-actualWallpaper, ;
-previousWallpaper, ;

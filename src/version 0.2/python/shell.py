@@ -26,7 +26,7 @@ def checkIfWindows():
 
 
 def checkIfDataFileExist():
-    if os.path.isfile("data.txt") == False:
+    if os.path.isfile("../data.txt") == False:
         return False;
 
 def restoringDataFileProcess():
@@ -51,7 +51,7 @@ def restoringDataFileProcess():
 
 
 def checkPathAlreadySet():
-    file = open("data.txt", "r");
+    file = open("../data.txt", "r");
     content = file.read();
     file.close();
 
@@ -95,7 +95,7 @@ def setPath(command):
     else:
         path = input("\nWhat is the path of your wallpaper folder? : ");
 
-    file = open("data.txt", "r");
+    file = open("../data.txt", "r");
     content = file.read();
     file.close();
 
@@ -111,7 +111,7 @@ def setPath(command):
 
 
 def changeWallpaper():
-    file = open("data.txt", "r");
+    file = open("../data.txt", "r");
     content = file.read();
     file.close();
 
@@ -138,7 +138,7 @@ def changeWallpaper():
 
 
 def restoreWallpaper():
-    file = open("data.txt", "r");
+    file = open("../data.txt", "r");
     content = file.read();
     file.close();
 
@@ -165,7 +165,7 @@ def restoreWallpaper():
 
 
 def writeInFile(data):
-    file = open('data.txt', 'w');
+    file = open('../data.txt', 'w');
 
     for i in data:
         file.write(i);

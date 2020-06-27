@@ -1,32 +1,53 @@
-import pyfiglet
 import time
 import os
 import sys
 import ctypes
 import random
-
-def welcome():
-    print(pyfiglet.Figlet(font = 'slant').renderText('     Wallpaper'));
-
-    print("\nWelcome to Wallpaper modifier !");
-    print("   Author: Valentin Le Lièvre \n   Version: 0.1 \n   License: MIT \n");
-
-def bye():
-    print("Thanks to use wallpaper modifier. Hope to see you soon ! \n");
-
-    time.sleep(2);
+import PIL
+import eel
 
 
 
-def checkIfWindows():
+def GUI():
+    width = 800;
+    height = 450;
+
+    eel.init('../../interface')
+    eel.start('main.html')
+
+    
+
+"""def setBackgroundImage(window, width, height):
+    file = open("../data.txt", "r");
+    content = file.read();
+    file.close();
+
+    data = content.split(';');
+    pathData = data[0].split(',');
+    actualWallpaperData = data[1].split(',');
+
+    imagePath = pathData[1] + "\\" + actualWallpaperData[1];
+
+    image = ImageTk.PhotoImage(Image.open(imagePath).resize((width, height)));
+    w = tk.Label(window, image=image);
+    w.pack();"""
+
+
+
+def checkIfWindows(autoMode = False):
     if os.name != "nt":
-            print("\u001b[31m\nYour are not on Windows operating system. Unfortunately this programm does not support other operating system than Windows.\u001b[0m \n");
+        if autoMode == False:
+            errorNotWindows();
+
+            time.sleep(2);
+            return False;
+        else:
             return False;
 
 
 
 def checkIfDataFileExist():
-    if os.path.isfile("data.txt") == False:
+    if os.path.isfile("../../data.txt") == False:
         return False;
 
 def restoringDataFileProcess():
@@ -50,8 +71,8 @@ def restoringDataFileProcess():
 
 
 
-def checkPathAlreadySet():
-    file = open("data.txt", "r");
+def checkPathAlreadySet(autoMode = False):
+    file = open("../../data.txt", "r");
     content = file.read();
     file.close();
 
@@ -60,27 +81,6 @@ def checkPathAlreadySet():
 
     if pathData[1] != " ":
         return True;
-
-
-
-def getInput():
-    command = input(">>> ");
-
-    return command;
-
-def excecuteCommand(command):
-    if command == "setPath" or command == "setpath":
-        setPath(command);
-    elif command == "next":
-        changeWallpaper();
-    elif command == "prev" or command == "previous":
-        restoreWallpaper();
-    elif command == "help":
-        help();
-    elif command == "quit":
-        return False;
-    else:
-        error(command);
 
 
 
@@ -95,7 +95,7 @@ def setPath(command):
     else:
         path = input("\nWhat is the path of your wallpaper folder? : ");
 
-    file = open("data.txt", "r");
+    file = open("../../data.txt", "r");
     content = file.read();
     file.close();
 
@@ -111,7 +111,7 @@ def setPath(command):
 
 
 def changeWallpaper():
-    file = open("data.txt", "r");
+    file = open("../../data.txt", "r");
     content = file.read();
     file.close();
 
@@ -138,7 +138,7 @@ def changeWallpaper():
 
 
 def restoreWallpaper():
-    file = open("data.txt", "r");
+    file = open("../../data.txt", "r");
     content = file.read();
     file.close();
 
@@ -165,7 +165,7 @@ def restoreWallpaper():
 
 
 def writeInFile(data):
-    file = open('data.txt', 'w');
+    file = open('../../data.txt', 'w');
 
     for i in data:
         file.write(i);
@@ -175,26 +175,21 @@ def writeInFile(data):
 
 
 def help():
-    text = ["Welcome in the wallpaper modifier documentation. Type help --function name for more infos about a specific function.", "", "How to use:", " _ <function name> [arguments] --optinal arguments", "", "List of functions:", " _ next    --> Change the wallpaper to the next based of your changing method.", " _ prev / previous   --> Restore the previous wallpaper. Works with only the last one.", " _ setpath    --> Allow you to set the folder path where your wallpaper are stored in your computer.", " _ quit    --> Quit the programm.", ""];
-
-    for i in text:
-        print(i);
-
-
-
-def error(command):
-    print("\u001b[31mThe function: " + command + " does not exist ! Try to correct the function or use 'help' for more information about the avaible functions.\u001b[0m \n");
+    text = "Welcome in the wallpaper modifier documentation. \n\n List of functions: \n _ next: Change the wallpaper to the next based of your changing method. \n _ previous: Restore the previous wallpaper. Works with only the last one. \n _ setpath:  Allow you to set the folder path where your wallpaper are stored in your computer.";
+    tkinter.messagebox.showinfo("Help", text);
 
 def errorPathNotSet():
-    print("\u001b[31mYou didn't set your wallpaper folder path. Wallpaper folder can't be found.\u001b[0m \n");
+    tkinter.messagebox.showerror("Error", "You didn't set your wallpaper folder path. Wallpaper folder can't be found.");
 
-def errorPathNotSet():
-    print("\u001b[31mThere is no previous wallpaper in your history. Use 'next' function multiple time before using 'prev'.\u001b[0m \n");
+def errorNoPreviousWallpaper():
+    tkinter.messagebox.showerror("Error", "There is no previous wallpaper in your history. Use 'next' function multiple time before using 'prev'.");
+
+def errorNotWindows():
+    tkinter.messagebox.showerror("Error", "Your are not on Windows operating system. Unfortunately this programm does not support other operating system than Windows.");
+
 
 
 def main():
-    welcome();
-
     if checkIfWindows() == False:
         return False;
 
@@ -202,16 +197,9 @@ def main():
         restoringDataFileProcess();
 
     if checkPathAlreadySet() != True:
-        print("\u001b[31mYou didn't set your wallpaper folder path. Be sure to set it before using WallpaperModifier. \nUse 'setpath' command to set the path.\u001b[0m \n");
+        errorPathNotSet();
 
-    print("Type help to see command options.");
-    while True:
-        command = getInput();
-        returnedValue = excecuteCommand(command);
-
-        if returnedValue == False:
-            bye();
-            break
+    window = GUI();
 
 if __name__ == "__main__":
     main();

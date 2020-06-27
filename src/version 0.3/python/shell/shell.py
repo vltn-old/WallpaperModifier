@@ -5,6 +5,21 @@ import sys
 import ctypes
 import random
 
+import win32gui
+import win32con
+
+
+def getFlags():
+    return sys.argv;
+
+
+
+def hidePythonShell():
+    pythonShell = win32gui.GetForegroundWindow();
+    win32gui.ShowWindow(pythonShell, win32con.SW_HIDE);
+
+
+
 def welcome():
     print(pyfiglet.Figlet(font = 'slant').renderText('     Wallpaper'));
 
@@ -18,15 +33,20 @@ def bye():
 
 
 
-def checkIfWindows():
+def checkIfWindows(autoMode = False):
     if os.name != "nt":
+        if autoMode == False:
             print("\u001b[31m\nYour are not on Windows operating system. Unfortunately this programm does not support other operating system than Windows.\u001b[0m \n");
+
+            time.sleep(2);
+            return False;
+        else:
             return False;
 
 
 
 def checkIfDataFileExist():
-    if os.path.isfile("data.txt") == False:
+    if os.path.isfile("../../data.txt") == False:
         return False;
 
 def restoringDataFileProcess():
@@ -50,8 +70,8 @@ def restoringDataFileProcess():
 
 
 
-def checkPathAlreadySet():
-    file = open("data.txt", "r");
+def checkPathAlreadySet(autoMode = False):
+    file = open("../../data.txt", "r");
     content = file.read();
     file.close();
 
@@ -95,7 +115,7 @@ def setPath(command):
     else:
         path = input("\nWhat is the path of your wallpaper folder? : ");
 
-    file = open("data.txt", "r");
+    file = open("../../data.txt", "r");
     content = file.read();
     file.close();
 
@@ -111,7 +131,7 @@ def setPath(command):
 
 
 def changeWallpaper():
-    file = open("data.txt", "r");
+    file = open("../../data.txt", "r");
     content = file.read();
     file.close();
 
@@ -138,7 +158,7 @@ def changeWallpaper():
 
 
 def restoreWallpaper():
-    file = open("data.txt", "r");
+    file = open("../../data.txt", "r");
     content = file.read();
     file.close();
 
@@ -165,7 +185,7 @@ def restoreWallpaper():
 
 
 def writeInFile(data):
-    file = open('data.txt', 'w');
+    file = open('../../data.txt', 'w');
 
     for i in data:
         file.write(i);
@@ -188,30 +208,46 @@ def error(command):
 def errorPathNotSet():
     print("\u001b[31mYou didn't set your wallpaper folder path. Wallpaper folder can't be found.\u001b[0m \n");
 
-def errorPathNotSet():
+def errorNoPreviousWallpaper():
     print("\u001b[31mThere is no previous wallpaper in your history. Use 'next' function multiple time before using 'prev'.\u001b[0m \n");
 
 
 def main():
-    welcome();
+    flagsCommand = getFlags();
 
-    if checkIfWindows() == False:
-        return False;
+    if len(flagsCommand) == 1:
+        welcome();
 
-    if checkIfDataFileExist() == False:
-        restoringDataFileProcess();
+        if checkIfWindows() == False:
+            return False;
 
-    if checkPathAlreadySet() != True:
-        print("\u001b[31mYou didn't set your wallpaper folder path. Be sure to set it before using WallpaperModifier. \nUse 'setpath' command to set the path.\u001b[0m \n");
+        if checkIfDataFileExist() == False:
+            restoringDataFileProcess();
 
-    print("Type help to see command options.");
-    while True:
-        command = getInput();
-        returnedValue = excecuteCommand(command);
+        if checkPathAlreadySet() != True:
+            errorPathNotSet();
 
-        if returnedValue == False:
-            bye();
-            break
+        print("Type help to see command options.");
+        while True:
+            command = getInput();
+            returnedValue = excecuteCommand(command);
+
+            if returnedValue == False:
+                bye();
+                break
+    else:
+        hidePythonShell();
+
+        if checkIfWindows(True) == False:
+            return False;
+
+        if checkIfDataFileExist() == False:
+            return False;
+
+        if checkPathAlreadySet(True) != True:
+            return False;
+
+        changeWallpaper();
 
 if __name__ == "__main__":
     main();
